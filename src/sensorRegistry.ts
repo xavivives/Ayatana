@@ -4,6 +4,7 @@ export enum connectionType {
 }
 
 export interface ISensorData {
+    id: string
     ip: string
     connection: connectionType
     frequency: number
@@ -17,10 +18,22 @@ export class SensorRegistry {
         this.registry = data
     }
 
-    public connect = () => {
-        for(let sensor of this.registry)
-        {
-            console.log(sensor)
+    public dial = () => {
+        for (const sensor of this.registry) {
+            if (sensor.connection === connectionType.http) {
+                this.connectHttpSensor(sensor)
+            }
+            else if (sensor.connection === connectionType.ws) {
+                this.connectWsSensor(sensor)
+            }
         }
     }
+
+    public connectHttpSensor = (sensor: ISensorData) => {
+
+    }
+
+    public connectWsSensor = (sensor: ISensorData) => {
+    }
 }
+
