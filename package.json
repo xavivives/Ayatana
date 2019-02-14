@@ -31,8 +31,10 @@
   "dependencies": {
     "@types/koa": "^2.0.48",
     "@types/koa-router": "^7.0.39",
+    "@types/ws": "^6.0.1",
     "koa": "^2.7.0",
     "koa-router": "^7.4.0",
-    "tslib": "~1.9.3"
+    "tslib": "~1.9.3",
+    "ws": "^6.1.3"
   }
 }
