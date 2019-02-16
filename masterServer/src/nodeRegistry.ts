@@ -5,6 +5,10 @@ export enum connectionType {
     http = "http"
 }
 
+export interface INodeRegistry {
+    nodes: INodeMetadata[]
+}
+
 export interface INodeMetadata {
     id: string
     url: string
@@ -17,9 +21,9 @@ export interface INodeData {
     sensors: ISensor[]
 }
 
-export interface INodeStatus{
-    error : string
-    metadata : INodeMetadata
+export interface INodeStatus {
+    error: string
+    metadata: INodeMetadata
     currentTimestamp: number
 }
 
@@ -33,12 +37,12 @@ export interface ITimestampedRecord {
     value: number
 }
 
-export class SensorRegistry {
+export class NodeRegistry {
 
     private registry: INodeMetadata[]
 
-    public popuplate = (data: INodeMetadata[]) => {
-        this.registry = data
+    public popuplate = (registry: INodeRegistry) => {
+        this.registry = registry.nodes
     }
 
     public dial = () => {
@@ -65,7 +69,7 @@ export class SensorRegistry {
             console.log(`Connection to ${node.id} stablished`)
         });
 
-        ws.on('message', (data:INodeData) => {
+        ws.on('message', (data: INodeData) => {
             console.log(data);
         });
     }
