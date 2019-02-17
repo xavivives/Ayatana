@@ -1,6 +1,16 @@
 #include <FS.h>
 #include <ArduinoJson.h>
 
+struct Config
+{
+    String ssid;
+    String password;
+    String id;
+};
+
+const char *configFilePath = "/config.json";
+Config config;
+
 void setup()
 {
     Serial.begin(115200);
@@ -34,14 +44,17 @@ bool read(String path)
 String parse(File file)
 {
     StaticJsonBuffer<512> jsonBuffer;
-    JsonObject &config = jsonBuffer.parseObject(file);
-    if (!config.success())
-        Serial.println(F("Failed to read file, using default configuration"));
+    JsonObject &jsonConfig = jsonBuffer.parseObject(file);
+    if (!jsonConfig.success())
+        Serial.println(F("Failed to read file, using default jsonConfiguration"));
 
-    Serial.println(config["id"]);
-    Serial.println(config["wifi"]["ssid"]);
-    Serial.println(config["wifi"]["password"]);
-    Serial.println(config["none"]);
+    config.ssid = jsonConfig["ssid"].as<String>();
+    config.password = jsonConfig["password"].as<String>();
+    config.id = jsonConfig["id"].as<String>();
+
+    Serial.println(config.ssid);
+    Serial.println(config.password);
+    Serial.println(config.id);
+
     Serial.println("Done");
-    
 }
