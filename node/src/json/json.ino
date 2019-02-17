@@ -32,7 +32,7 @@ bool read(String path)
     if (SPIFFS.exists(path))
     {                                       // If the file exists
         File file = SPIFFS.open(path, "r"); // Open it
-        String parsed = parse(file);
+        parseConfig(file);
         Serial.println(parsed);
         file.close(); // Then close the file again
         return true;
@@ -41,15 +41,15 @@ bool read(String path)
     return false; // If the file doesn't exist, return false
 }
 
-String parse(File file)
+void parseConfig(File file)
 {
     StaticJsonBuffer<512> jsonBuffer;
     JsonObject &jsonConfig = jsonBuffer.parseObject(file);
     if (!jsonConfig.success())
         Serial.println(F("Failed to read file, using default jsonConfiguration"));
 
-    config.ssid = jsonConfig["ssid"].as<String>();
-    config.password = jsonConfig["password"].as<String>();
+    config.ssid = jsonConfig["wifi"]["ssid"].as<String>();
+    config.password = jsonConfig["wifi"]["password"].as<String>();
     config.id = jsonConfig["id"].as<String>();
 
     Serial.println(config.ssid);
