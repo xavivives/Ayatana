@@ -5,6 +5,8 @@ void setup()
     Serial.begin(115200);
     delay(10);
     Serial.println('\n');
+    read("config");
+    Serial.println('DOne reading');
 }
 
 void loop()
