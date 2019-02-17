@@ -1,13 +1,14 @@
 #include <FS.h>
+#include <ArduinoJson.h>
 
 void setup()
 {
     Serial.begin(115200);
     delay(10);
     Serial.println('\n');
-    read("/config");
-    Serial.println('DOne reading');
     SPIFFS.begin();
+    read("/config.json");
+    Serial.println('DOne reading');
 }
 
 void loop()
@@ -30,12 +31,17 @@ bool read(String path)
     return false; // If the file doesn't exist, return false
 }
 
-String parse(File f)
+String parse(File file)
 {
-    String parsed = "";
-    while (f.available())
-    {
-        parsed += char(f.read());
-    }
-    return parsed;
+    StaticJsonBuffer<512> jsonBuffer;
+    JsonObject &config = jsonBuffer.parseObject(file);
+    if (!config.success())
+        Serial.println(F("Failed to read file, using default configuration"));
+
+    Serial.println(config["id"]);
+    Serial.println(config["wifi"]["ssid"]);
+    Serial.println(config["wifi"]["password"]);
+    Serial.println(config["none"]);
+    Serial.println("Done");
+    
 }
