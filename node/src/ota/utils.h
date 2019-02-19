@@ -1,14 +1,19 @@
 #include <FS.h>
 #include <ArduinoJson.h>
 
-struct Config
+struct Wifi
 {
     String ssid;
     String password;
+};
+
+struct Config
+{
+    Wifi wifis[];
     String id;
 };
 
-typedef void (*ReadFileCallback) (const File file);
+typedef void (*ReadFileCallback)(const File file);
 
 bool readFile(String path, ReadFileCallback callback)
 { // send the right file to the client (if it exists)
@@ -34,13 +39,18 @@ Config parseConfig(File file)
         Serial.println(F("Failed to read file, using default jsonConfiguration"));
 
     Config config;
-    config.ssid = jsonConfig["wifi"]["ssid"].as<String>();
-    config.password = jsonConfig["wifi"]["password"].as<String>();
     config.id = jsonConfig["id"].as<String>();
 
-    Serial.println(config.ssid);
-    Serial.println(config.password);
-    Serial.println(config.id);
+    //JsonArray& jsonWifis = jsonConfig["wifis"];
+    int arraySize = jsonConfig["wifis"].size();
+
+    for (int i = 0; i < arraySize; i++)
+    {
+        Wifi wifi;
+        wifi.ssid = jsonConfig["wifis"][i]["ssid"].as<String>();
+        wifi.password = jsonConfig["wifis"][i]["password"].as<String>();
+        config.wifis[i] = wifi;
+    }
 
     Serial.println("Done");
 
