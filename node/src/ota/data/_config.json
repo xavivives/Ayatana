@@ -1,4 +1,13 @@
 {
-    "ssid": "YourSsid",
-    "password": "YourPassword. Also, rename the file to: config.json"
+    "id": "gong",
+    "wifis": [
+        {
+            "ssid": "Ssid1",
+            "password": "YourPassword. Also, rename the file to: config.json"
+        },
+        {
+            "ssid": "Ssid2",
+            "password": "YourPassword. Also, rename the file to: config.json"
+        }
+    ]
 }

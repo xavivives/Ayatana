@@ -6,37 +6,46 @@
 ESP8266WiFiMulti wifiMulti; // Create an instance of the ESP8266WiFiMulti class, called 'wifiMulti'
 
 const byte led = 2;
+Config config;
 
 void onConfigRead(File file)
 {
-    Config config = parseConfig(file);
-
+  config = parseConfig(file);
 }
+
 void setup()
 {
-    const char *configFilePath = "/config.json";
-    readFile(configFilePath, onConfigRead);
-    /*
-  Serial.begin(115200);         // Start the Serial communication to send messages to the computer
+  const char *configFilePath = "/config.json";
+  readFile(configFilePath, onConfigRead);
+
+  Serial.begin(115200); // Start the Serial communication to send messages to the computer
   delay(10);
   Serial.println('\n');
 
-  wifiMulti.addAP("ssid_from_AP_1", "your_password_for_AP_1");   // add Wi-Fi networks you want to connect to
+  int wifisLength = sizeof(config.wifis) / sizeof(config.wifis[0]);
+  for (int i = 0; i < wifisLength; i++)
+  {
+    Serial.println(config.wifis[0].ssid);
+  }
+
+  /*
+  wifiMulti.addAP("ssid_from_AP_1", "your_password_for_AP_1"); // add Wi-Fi networks you want to connect to
   wifiMulti.addAP("ssid_from_AP_2", "your_password_for_AP_2");
   wifiMulti.addAP("ssid_from_AP_3", "your_password_for_AP_3");
 
   Serial.println("Connecting ...");
   int i = 0;
-  while (wifiMulti.run() != WL_CONNECTED) { // Wait for the Wi-Fi to connect
+  while (wifiMulti.run() != WL_CONNECTED)
+  { // Wait for the Wi-Fi to connect
     delay(250);
     Serial.print('.');
   }
   Serial.println('\n');
   Serial.print("Connected to ");
-  Serial.println(WiFi.SSID());              // Tell us what network we're connected to
+  Serial.println(WiFi.SSID()); // Tell us what network we're connected to
   Serial.print("IP address:\t");
-  Serial.println(WiFi.localIP());           // Send the IP address of the ESP8266 to the computer
-  
+  Serial.println(WiFi.localIP()); // Send the IP address of the ESP8266 to the computer
+
   ArduinoOTA.setHostname("ESP8266");
   ArduinoOTA.setPassword("esp8266");
 
@@ -51,18 +60,22 @@ void setup()
   });
   ArduinoOTA.onError([](ota_error_t error) {
     Serial.printf("Error[%u]: ", error);
-    if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
-    else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
-    else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
-    else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
-    else if (error == OTA_END_ERROR) Serial.println("End Failed");
+    if (error == OTA_AUTH_ERROR)
+      Serial.println("Auth Failed");
+    else if (error == OTA_BEGIN_ERROR)
+      Serial.println("Begin Failed");
+    else if (error == OTA_CONNECT_ERROR)
+      Serial.println("Connect Failed");
+    else if (error == OTA_RECEIVE_ERROR)
+      Serial.println("Receive Failed");
+    else if (error == OTA_END_ERROR)
+      Serial.println("End Failed");
   });
   ArduinoOTA.begin();
   Serial.println("OTA ready");
 
   pinMode(led, OUTPUT);
-  digitalWrite(led, 1);
-  */
+  digitalWrite(led, 1);*/
 }
 
 unsigned long previousTime = millis();
@@ -71,10 +84,13 @@ const unsigned long interval = 1000;
 
 void loop()
 {
-    /*ArduinoOTA.handle();
+  /*
+  ArduinoOTA.handle();
   unsigned long diff = millis() - previousTime;
-  if(diff > interval) {
-    digitalWrite(led, !digitalRead(led));  // Change the state of the LED
+  if (diff > interval)
+  {
+    digitalWrite(led, !digitalRead(led)); // Change the state of the LED
     previousTime += diff;
-  }*/
+  }
+  */
 }
