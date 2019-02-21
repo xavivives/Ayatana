@@ -7,6 +7,7 @@ String password = "none";
 
 bool setWifiFromConfig()
 {
+    const char* path = "/wifi.json";
     Serial.println("Reading... ");
 
     if (SPIFFS.begin())
@@ -20,7 +21,7 @@ bool setWifiFromConfig()
 
     if (SPIFFS.exists(path))
     {
-        File file = SPIFFS.open("/config.json", "r");
+        File file = SPIFFS.open("path", "r");
 
         StaticJsonBuffer<512> jsonBuffer;
         JsonObject &jsonConfig = jsonBuffer.parseObject(file);
