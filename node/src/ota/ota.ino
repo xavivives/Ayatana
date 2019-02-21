@@ -1,32 +1,21 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
 #include <ArduinoOTA.h>
-#include "utils.h"
 
 ESP8266WiFiMulti wifiMulti; // Create an instance of the ESP8266WiFiMulti class, called 'wifiMulti'
 
 const byte led = 2;
-Config config;
 
-void onConfigRead(File file)
-{
-  config = parseConfig(file);
-}
-
-void setup()
-{
-  const char *configFilePath = "/config.json";
-  readFile(configFilePath, onConfigRead);
-
+void setup(){
+  
   Serial.begin(115200); // Start the Serial communication to send messages to the computer
   delay(10);
-  Serial.println('\n');
 
-  int wifisLength = sizeof(config.wifis) / sizeof(config.wifis[0]);
-  for (int i = 0; i < wifisLength; i++)
-  {
-    Serial.println(config.wifis[0].ssid);
-  }
+ 
+  setWifiFromConfig();
+
+  Serial.println('Wifi config set!');
+  Serial.println('\n Next');
 
   /*
   wifiMulti.addAP("ssid_from_AP_1", "your_password_for_AP_1"); // add Wi-Fi networks you want to connect to

@@ -1,2 +1,2 @@
 .vscode/
-node/src/ota/data/config.json
+node/src/ota/data/wifi.json
