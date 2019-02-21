@@ -10,6 +10,7 @@ bool setWifiFromConfig()
     String path = "/wifi.json";
     Serial.println("Reading... " + path);
 
+    SPIFFS.begin(); 
     if (SPIFFS.exists(path))
     {
         File file = SPIFFS.open(path, "r");
