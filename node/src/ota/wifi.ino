@@ -7,10 +7,18 @@ String password = "none";
 
 bool setWifiFromConfig()
 {
-    String path = "/wifi.json";
-    Serial.println("Reading... " + path);
+    const char* path = "/config.json";
+    Serial.println("Reading... ");
 
-    SPIFFS.begin(); 
+    if (SPIFFS.begin())
+    {
+        Serial.println("SPIFFS initialized");
+    }
+    else
+    {
+        Serial.println("SPIFFS failed");
+    }
+
     if (SPIFFS.exists(path))
     {
         File file = SPIFFS.open(path, "r");
@@ -19,7 +27,7 @@ bool setWifiFromConfig()
         JsonObject &jsonConfig = jsonBuffer.parseObject(file);
         if (!jsonConfig.success())
         {
-            Serial.println("Failed to read " + path);
+            Serial.println("Failed to read ");
             return false;
         }
 
