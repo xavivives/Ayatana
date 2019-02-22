@@ -32,15 +32,8 @@ bool setWifiFromConfig()
         }
 
         id = jsonConfig["id"].as<String>();
-
-        int arraySize = jsonConfig["wifis"].size();
-
-        for (int i = 0; i < arraySize; i++)
-        {
-            ssid = jsonConfig["wifis"][i]["ssid"].as<String>();
-            password = jsonConfig["wifis"][i]["password"].as<String>();
-            Serial.println("Failed to read file, using default jsonConfiguration");
-        }
+        ssid = jsonConfig["ssid"].as<String>();
+        password = jsonConfig["password"].as<String>();
 
         file.close();
         return true;
