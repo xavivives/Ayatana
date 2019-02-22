@@ -21,7 +21,7 @@ bool setWifiFromConfig()
 
     if (SPIFFS.exists(path))
     {
-        File file = SPIFFS.open("path", "r");
+        File file = SPIFFS.open(path, "r");
 
         StaticJsonBuffer<512> jsonBuffer;
         JsonObject &jsonConfig = jsonBuffer.parseObject(file);

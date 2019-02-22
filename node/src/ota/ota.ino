@@ -6,16 +6,19 @@ ESP8266WiFiMulti wifiMulti; // Create an instance of the ESP8266WiFiMulti class,
 
 const byte led = 2;
 
-void setup(){
-  
+void setup()
+{
+
   Serial.begin(115200); // Start the Serial communication to send messages to the computer
   delay(10);
 
- 
   setWifiFromConfig();
 
-  Serial.println('Wifi config set!');
-  Serial.println('\n Next');
+  Serial.println(id);
+  Serial.println(ssid);
+  Serial.println(password);
+  Serial.println("Wifi config set!");
+  Serial.println("\n Next");
 
   /*
   wifiMulti.addAP("ssid_from_AP_1", "your_password_for_AP_1"); // add Wi-Fi networks you want to connect to
