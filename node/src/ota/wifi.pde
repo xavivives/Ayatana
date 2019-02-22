@@ -1,8 +1,6 @@
 #include <FS.h>
 #include <ArduinoJson.h>
 
-
-
 bool setWifiFromConfig()
 {
     const char *path = "/wifi.json";
