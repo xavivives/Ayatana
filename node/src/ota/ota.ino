@@ -5,6 +5,9 @@
 ESP8266WiFiMulti wifiMulti; // Create an instance of the ESP8266WiFiMulti class, called 'wifiMulti'
 
 const byte led = 2;
+extern String id = "none";
+extern String ssid = "none";
+extern String password = "none";
 
 void setup()
 {

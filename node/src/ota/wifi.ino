@@ -1,13 +1,11 @@
 #include <FS.h>
 #include <ArduinoJson.h>
 
-String id = "none";
-String ssid = "none";
-String password = "none";
+
 
 bool setWifiFromConfig()
 {
-    const char* path = "/wifi.json";
+    const char *path = "/wifi.json";
     Serial.println("Reading... ");
 
     if (SPIFFS.begin())
