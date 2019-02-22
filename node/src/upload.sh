@@ -5,6 +5,14 @@ FQBN="esp8266:esp8266:nodemcu"
 DIR="ota"
 MODE=$1
 
+if [ "$MODE" = "get" ] || [ -z "$MODE" ]
+then
+    echo "Cleaning repo..."
+    git reset --hard
+    echo "Getting new changes..."
+    git pull
+fi
+
 cd $DIR
 
 if [ "$MODE" = "compile" ] || [ -z "$MODE" ]
